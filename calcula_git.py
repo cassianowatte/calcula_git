@@ -152,7 +152,6 @@ def main():
     # input (user_input, self.user_name, self.user_date, self.user_continuous)
     # output (self.user_output, self.user_name, self.user_date, self.user_continuous)
     while True:
-
         print('''Digite a opção desejada:
         [1] inserir entradas
         [2] inserir saidas
@@ -160,7 +159,6 @@ def main():
         [4] consultar entradas
         [5] consultar saidas
         [6] consultar pagamentos
-        
         ''')
         options = {
             1: insert_compensation,
