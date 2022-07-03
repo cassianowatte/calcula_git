@@ -5,6 +5,8 @@
 import pandas as pd
 import os
 import csv
+from tkinter import *
+from tkinter.ttk import *
 
 coloumns_names = [
     'Valor', 'Nome', 'Data', 'Recorrente'
@@ -145,6 +147,60 @@ def query_payment(option):
         if consulta_payment in linha:
             print(linha)
 
+janela = Tk()
+janela.title('Calcula Python')
+janela.geometry('512x256')
+
+
+
+def nova_janela():
+    nova_janela = Toplevel(janela)
+    nova_janela.title('Calcula Python')
+    nova_janela.geometry('512x256')
+    Label(nova_janela, text='Insira as informações!').pack()
+    valor = Label(nova_janela, text='Valor:', font='arial')
+    valor.place(relx=0.1, rely=0.30, relwidth=0.15, relheight=0.1)
+    nome = Label(nova_janela, text='Nome:', font='arial')
+    nome.place(relx=0.1, rely=0.42, relwidth=0.15, relheight=0.1)
+    data = Label(nova_janela, text='Data:', font='arial')
+    data.place(relx=0.1, rely=0.54, relwidth=0.15, relheight=0.1)
+    recorrente = Label(nova_janela, text='Recorrente:', font='arial')
+    recorrente.place(relx=0.1, rely=0.66, relwidth=0.17, relheight=0.1)
+    entry1 = Entry(nova_janela, font=('arial', 11, 'bold'))
+    entry1.place(relx=0.2, rely=0.30, relwidth=0.20, relheight=0.1)
+    entry2 = Entry(nova_janela, font=('arial', 11, 'bold'))
+    entry2.place(relx=0.2, rely=0.42, relwidth=0.35, relheight=0.1)
+    entry3 = Entry(nova_janela, font=('arial', 11, 'bold'))
+    entry3.place(relx=0.2, rely=0.54, relwidth=0.20, relheight=0.1)
+    entry4 = Entry(nova_janela, font=('arial', 11, 'bold'))
+    entry4.place(relx=0.27, rely=0.66, relwidth=0.15, relheight=0.1)
+
+
+
+
+
+texto_orientacao = Label(janela, text='Escolha a Opção desejada!')
+texto_orientacao.grid(column=0, row=0)
+
+botao1 = Button(janela, text='Inserir Entradas', command=nova_janela)
+botao1.grid(column=5, row= 5)
+
+
+
+
+botao2 = Button(janela, text='Inserir Saidas', command=nova_janela)
+botao2.grid(column=5, row=6)
+
+botao3 = Button(janela, text='Inserir Pagamentos', command=nova_janela)
+botao3.grid(column=5, row=7)
+
+
+
+
+
+janela.mainloop()
+
+
 
 def main():
     # TODO verify if the file data and spent files already exists
@@ -172,6 +228,11 @@ def main():
 
         option = int(input('Which option would you like to perform? '))
         options.get(option)(option)
+
+
+
+
+
 
 
 if __name__ == "__main__":
