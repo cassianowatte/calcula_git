@@ -185,9 +185,6 @@ texto_orientacao.grid(column=0, row=0)
 botao1 = Button(janela, text='Inserir Entradas', command=nova_janela)
 botao1.grid(column=5, row= 5)
 
-
-
-
 botao2 = Button(janela, text='Inserir Saidas', command=nova_janela)
 botao2.grid(column=5, row=6)
 
