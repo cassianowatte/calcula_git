@@ -146,9 +146,6 @@ janela.title('Calcula Python')
 janela.geometry('512x256')
 
 
-
-
-
 def nova_janela(a):
     nova_janela = Toplevel(janela)
     nova_janela.title('Calcula Python')
@@ -175,10 +172,6 @@ def nova_janela(a):
         botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_compensation(entry1.get(), entry2.get(), entry3.get(), entry4.get(), nova_janela))
         botaoadd.pack()
         
-        
-            
-
-        
     if a == 2:
         botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_spent(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
         botaoadd.pack()
@@ -187,34 +180,15 @@ def nova_janela(a):
         botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_payment(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
         botaoadd.pack()
 
-
-
-
-    
-
-
-
-
-
 texto_orientacao = Label(janela, text='Escolha a Opção desejada!')
 texto_orientacao.grid(column=0, row=0)
-
 botao1 = Button(janela, text='Inserir Entradas', command=lambda: nova_janela(1))
 botao1.grid(column=5, row= 5)
-
 botao2 = Button(janela, text='Inserir Saidas', command=lambda: nova_janela(2))
 botao2.grid(column=5, row=6)
-
 botao3 = Button(janela, text='Inserir Pagamentos', command=lambda: nova_janela(3))
 botao3.grid(column=5, row=7)
-
-
-
-
-
 janela.mainloop()
-
-
 
 def main():
     # TODO verify if the file data and spent files already exists
