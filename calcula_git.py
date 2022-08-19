@@ -2,6 +2,10 @@
 # @description this is a study case
 
 # used because
+from optparse import Option
+from turtle import down
+from typing import Any
+from webbrowser import get
 import pandas as pd
 import os
 import csv
@@ -41,15 +45,11 @@ class ContentTable:
         return [self.user_output, self.user_name, self.user_date, self.user_continuous]
 
 
-def insert_compensation(option):
-    valor_entradas = float(input('Valor da conta:'))
-    data_entradas = str(input('Digite a data: '))
-    nome_entradas = str(input('Nome da Entrada: '))
-    recorrente_entradas = str(input('Recorrente [S/N]: ')).strip().upper()
-    if recorrente_entradas in 'Ss':
-        recorrente_entradas = 'sim'
-    else:
-        recorrente_entradas = 'nao'
+def insert_compensation(valor,nome,data,recorrente,nova_janela):
+    valor_entradas = valor
+    nome_entradas = nome
+    data_entradas = data
+    recorrente_entradas = recorrente
     tabela = ContentTable()
     tabela.inputData(valor_entradas, nome_entradas,
                      data_entradas, recorrente_entradas)
@@ -65,18 +65,16 @@ def insert_compensation(option):
     csvFormat = pd.concat([csvFormat, pd.DataFrame(
         [tabela.getListFormat()], columns=coloumns_names)])
     csvFormat.to_csv('compensation.csv', index=False)
-    print('valores de entradas inseridos com sucesso!')
+    ok = Label(nova_janela, text='Informações Inseridas com Sucesso!', font='Arial')
+    ok.pack(side=BOTTOM)
+    
 
 
-def insert_spent(option):
-    valor_saida = float(input('Valor da saida: '))
-    data_saida = str(input('Data da saida: '))
-    nome_saida = str(input('Descrição da saida: '))
-    recorrente_saida = str(input('recorrente [S/N]: ')).strip().upper()
-    if recorrente_saida in 'sS':
-        recorrente_saida = 'sim'
-    else:
-        recorrente_saida = 'nao'
+def insert_spent(valor,nome,data,recorrente):
+    valor_saida = valor
+    nome_saida = nome
+    data_saida = data
+    recorrente_saida = recorrente
     tabela = ContentTable()
     tabela.inputData(valor_saida, nome_saida, data_saida, recorrente_saida)
     diretorio = ('spent.csv')
@@ -93,15 +91,11 @@ def insert_spent(option):
           )
 
 
-def insert_payment(option):
-    valor_pagamento = float(input('Valor do pagamento: '))
-    data_pagamento = str(input('Data do pagamento: '))
-    descricao_pagamento = str(input('Descrição do pagamento: '))
-    input_pago = str(input('Pago [S/N]: ')).strip().upper()
-    if input_pago in 'Ss':
-        input_pago = 'sim'
-    else:
-        input_pago = 'nao'
+def insert_payment(valor,nome,data,pago):
+    valor_pagamento = valor
+    descricao_pagamento = nome
+    data_pagamento = data
+    input_pago = pago
     tabela = ContentTable()
     tabela.inputData(valor_pagamento, descricao_pagamento,
                      data_pagamento, input_pago)
@@ -153,12 +147,15 @@ janela.geometry('512x256')
 
 
 
-def nova_janela():
+
+
+def nova_janela(a):
     nova_janela = Toplevel(janela)
     nova_janela.title('Calcula Python')
     nova_janela.geometry('512x256')
     Label(nova_janela, text='Insira as informações!').pack()
-    valor = Label(nova_janela, text='Valor:', font='arial')
+    
+    valor = Label(nova_janela, text='Valor:', font='arial',)
     valor.place(relx=0.1, rely=0.30, relwidth=0.15, relheight=0.1)
     nome = Label(nova_janela, text='Nome:', font='arial')
     nome.place(relx=0.1, rely=0.42, relwidth=0.15, relheight=0.1)
@@ -174,6 +171,26 @@ def nova_janela():
     entry3.place(relx=0.2, rely=0.54, relwidth=0.20, relheight=0.1)
     entry4 = Entry(nova_janela, font=('arial', 11, 'bold'))
     entry4.place(relx=0.27, rely=0.66, relwidth=0.15, relheight=0.1)
+    if a == 1:
+        botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_compensation(entry1.get(), entry2.get(), entry3.get(), entry4.get(), nova_janela))
+        botaoadd.pack()
+        
+        
+            
+
+        
+    if a == 2:
+        botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_spent(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
+        botaoadd.pack()
+
+    if a == 3:
+        botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_payment(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
+        botaoadd.pack()
+
+
+
+
+    
 
 
 
@@ -182,13 +199,13 @@ def nova_janela():
 texto_orientacao = Label(janela, text='Escolha a Opção desejada!')
 texto_orientacao.grid(column=0, row=0)
 
-botao1 = Button(janela, text='Inserir Entradas', command=nova_janela)
+botao1 = Button(janela, text='Inserir Entradas', command=lambda: nova_janela(1))
 botao1.grid(column=5, row= 5)
 
-botao2 = Button(janela, text='Inserir Saidas', command=nova_janela)
+botao2 = Button(janela, text='Inserir Saidas', command=lambda: nova_janela(2))
 botao2.grid(column=5, row=6)
 
-botao3 = Button(janela, text='Inserir Pagamentos', command=nova_janela)
+botao3 = Button(janela, text='Inserir Pagamentos', command=lambda: nova_janela(3))
 botao3.grid(column=5, row=7)
 
 
