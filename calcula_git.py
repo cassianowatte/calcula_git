@@ -2,7 +2,9 @@
 # @description this is a study case
 
 # used because
+from distutils.cmd import Command
 from optparse import Option
+from re import A
 from turtle import down
 from typing import Any
 from webbrowser import get
@@ -11,6 +13,7 @@ import os
 import csv
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import ttk
 
 coloumns_names = [
     'Valor', 'Nome', 'Data', 'Recorrente'
@@ -68,6 +71,7 @@ def insert_compensation(valor,nome,data,recorrente,nova_janela):
     ok = Label(nova_janela, text='Informações Inseridas com Sucesso!', font='Arial')
     ok.pack(side=BOTTOM)
     
+    
 
 
 def insert_spent(valor,nome,data,recorrente):
@@ -113,13 +117,11 @@ def insert_payment(valor,nome,data,pago):
 
 
 def query_compensation(option):
-    consulta_entradas1 = str(input('Entrada desejada: '))
+    #consulta_entradas1 = str(input('Entrada desejada: '))
     with open('compensation.csv', 'r') as f:
         exibir = f.readlines()
-    print('Valor | Nome | Data | Recorrente')
     for linha in exibir:
-        if consulta_entradas1 in linha:
-            print(linha)
+        print(linha)
 
 
 def query_spent(option):
@@ -146,6 +148,27 @@ janela.title('Calcula Python')
 janela.geometry('512x256')
 
 
+def pesquisa(a):
+    pesquisa = Toplevel()
+    pesquisa.title('Calcula Python')
+    pesquisa.geometry('512x256')
+    Label(pesquisa, text='Informações Entradas!').pack()
+    pesquisa = ttk.Treeview(pesquisa,columns=('Valor', 'Nome', 'Data','Recorrente'), show='headings')
+    pesquisa.column('Valor', minwidth=0, width=100)
+    pesquisa.column('Nome', minwidth=0, width=200)
+    pesquisa.column('Data', minwidth=0, width=100)
+    pesquisa.column('Recorrente', minwidth=0, width=100)
+    pesquisa.heading('Valor', text='Valor')
+    pesquisa.heading('Nome', text='Nome')
+    pesquisa.heading('Data', text='Data')
+    pesquisa.heading('Recorrente', text='Recorrente')
+    pesquisa.pack()
+    
+    
+    
+    
+    
+    
 def nova_janela(a):
     nova_janela = Toplevel(janela)
     nova_janela.title('Calcula Python')
@@ -169,8 +192,9 @@ def nova_janela(a):
     entry4 = Entry(nova_janela, font=('arial', 11, 'bold'))
     entry4.place(relx=0.27, rely=0.66, relwidth=0.15, relheight=0.1)
     if a == 1:
-        botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_compensation(entry1.get(), entry2.get(), entry3.get(), entry4.get(), nova_janela))
+        botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_compensation(entry1.get(), entry2.get(), entry3.get(), entry4.get(),nova_janela))
         botaoadd.pack()
+       
         
     if a == 2:
         botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_spent(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
@@ -180,6 +204,8 @@ def nova_janela(a):
         botaoadd = Button(nova_janela, text='SALVAR',command=lambda: insert_payment(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
         botaoadd.pack()
 
+
+
 texto_orientacao = Label(janela, text='Escolha a Opção desejada!')
 texto_orientacao.grid(column=0, row=0)
 botao1 = Button(janela, text='Inserir Entradas', command=lambda: nova_janela(1))
@@ -188,6 +214,8 @@ botao2 = Button(janela, text='Inserir Saidas', command=lambda: nova_janela(2))
 botao2.grid(column=5, row=6)
 botao3 = Button(janela, text='Inserir Pagamentos', command=lambda: nova_janela(3))
 botao3.grid(column=5, row=7)
+botao4 = Button(janela, text='Exibir entradas', command=lambda: pesquisa(1))
+botao4.grid(column=5, row=8)
 janela.mainloop()
 
 def main():
